@@ -366,7 +366,7 @@ code {
     });
   </script>
 <h1 id="practical-quality-control-and-trimming">Practical: Quality Control and Trimming</h1>
-<p>In this practical you will learn to import, view, and check the quality of raw high-throughput sequencing data using FastQC and Trimmomatic (via Docker).</p>
+<p>In this practical, you will learn to import, view, and check the quality of raw high-throughput sequencing data using FastQC and Trimmomatic (via Docker).</p>
 <p>The first dataset is from an Illumina MiSeq sequencing of <em>enterohaemorrhagic E. coli</em> (EHEC), serotype O157 — a potentially fatal gastrointestinal pathogen involved in a 2011 outbreak in St. Louis, USA. The data is paired-end 2×150 bp reads.</p>
 <hr>
 <h2 id="working-directory">Working Directory</h2>
@@ -375,11 +375,14 @@ code {
 <span class="hljs-built_in">cd</span> ~/work
 </div></code></pre>
 <h2 id="downloading-the-data">Downloading the Data</h2>
+<p>🧪 In this practical, you will use the <a href="https://www.ebi.ac.uk/ena/browser/home">European Nucleotide Archive</a> (ENA) to download real Illumina sequencing data for quality control and trimming exercises. ENA is a public database that stores nucleotide sequencing data, such as DNA and RNA sequences, submitted by researchers around the world.</p>
+<p>It is part of the EMBL-EBI (European Bioinformatics Institute). ENA provides free access to raw sequencing reads, genome assemblies, and functional annotation. Accession numbers like SRR957824 are unique IDs that help you find specific datasets.</p>
 <p>The raw data is available on ENA under accession number SRR957824.</p>
 <h3 id="step-1-download-data">Step 1: Download data</h3>
 <pre class="hljs"><code><div>wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_1.fastq.gz
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_2.fastq.gz
 </div></code></pre>
+<hr>
 <h3 id="step-2-check-file-size">Step 2: Check file size</h3>
 <pre class="hljs"><code><div>ls -l
 </div></code></pre>
@@ -387,30 +390,41 @@ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_2.fastq.gz
 <p>One last thing before we get to the quality control: those files are writeable. By default, UNIX makes things writeable by the file owner. This poses an issue with creating typos or errors in raw data. We fix that before going further</p>
 <pre class="hljs"><code><div>chmod u-w *
 </div></code></pre>
-<p><strong>Question:</strong> Where does the filename come from?</p>
-<p><strong>Question:</strong> Why are there <code>_1</code> and <code>_2</code> in the file names?</p>
 <hr>
 <h3 id="step-3-preview-a-fastq-file">Step 3: Preview a FASTQ file</h3>
 <pre class="hljs"><code><div>zless SRR957824_1.fastq.gz
 </div></code></pre>
-<p><strong>Tip:</strong> Use the spacebar to scroll and <code>q</code> to exit.</p>
+<h2 id="tip-use-the-spacebar-to-scroll-and-q-to-exit"><strong>Tip:</strong> Use the spacebar to scroll and <code>q</code> to exit.</h2>
+<p>The fastq format is a text-based format that represents nucleotide sequences but also contains the corresponding quality of each nucleotide. It is the standard for storing the output of high-throughput sequencing instruments such as the Illumina machines.</p>
+<p>A fastq file uses four lines per sequence:</p>
+<p>Line 1 begins with a '@' character and is followed by a sequence identifier and an optional description (like a FASTA title line).</p>
+<p>Line 2 is the raw sequence of letters.</p>
+<p>Line 3 begins with a '+' character and is optionally followed by the same sequence identifier (and any description) again.</p>
+<p>Line 4 encodes the quality values for the sequence in Line 2, and must contain the same number of symbols as letters in the sequence.</p>
+<p>You can read more on the FASTQ format <a href="https://www.hadriengourle.com/tutorials/file_formats/">here</a>.</p>
+<hr>
+<p><strong>Question:</strong> Where does the filename come from?</p>
+<p><strong>Question:</strong> Why are there <code>_1</code> and <code>_2</code> in the file names?</p>
 <hr>
 <h2 id="fastqc-pre-trimming-quality-check">FastQC (Pre-Trimming Quality Check)</h2>
-<p>To check the quality of the sequence data we will use a tool called FastQC.</p>
+<p>To check the quality of the sequence data, we will use a tool called FastQC.</p>
 <p>FastQC has a graphical interface and can be downloaded and run on a Windows or Linux computer without installation. It is available <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">here</a>.</p>
-<p>However, FastQC is also available as a command line utility in docker. Docker makes things simple and consistent. Instead of installing software like FastQC or Trimmomatic yourself, Docker lets you download small packages (called containers) that already have everything set up. You can then run them directly on your data using simple commands. Docker makes it easy to run bioinformatics tools without worrying about installation or compatibility.</p>
+<p>However, FastQC is also available as a command-line utility in Docker. Docker makes things simple and consistent. Instead of installing software like FastQC or Trimmomatic yourself, Docker lets you download small packages (called containers) that already have everything set up. You can then run them directly on your data using simple commands. Docker makes it easy to run bioinformatics tools without worrying about installation or compatibility.</p>
 <p>Think of Docker like a shipping container for software. Just like shipping containers hold goods and can be transported anywhere, Docker containers hold software and can run anywhere: on your laptop, a lab server, or the cloud without needing to be unpacked or reinstalled. Everything the program needs is bundled inside.</p>
 <h3 id="step-1-pull-the-fastqc-docker-image">Step 1: Pull the FastQC Docker image</h3>
 <pre class="hljs"><code><div>docker pull biocontainers/fastqc:v0.11.9_cv8
 </div></code></pre>
+<hr>
 <h3 id="step-2-run-fastqc-in-docker">Step 2: Run FastQC in Docker</h3>
 <pre class="hljs"><code><div>docker run --rm -v <span class="hljs-string">"<span class="hljs-variable">$PWD</span>"</span>:/data biocontainers/fastqc:v0.11.9_cv8 fastqc /data/SRR957824_1.fastq.gz /data/SRR957824_2.fastq.gz
 </div></code></pre>
+<hr>
 <h3 id="step-3-list-output-files">Step 3: List output files</h3>
 <pre class="hljs"><code><div>ls *fastqc*
 </div></code></pre>
-<p>For each file, FastQC has produced both a .zip archive containing all the plots, and a html report.
-Download and open the html files with your favourite web browser.</p>
+<p>For each file, FastQC has produced both a .zip archive containing all the plots and a HTML report.
+Download and open the HTML files with your favourite web browser.</p>
+<hr>
 <p><strong>Question:</strong> What should you pay attention to in the FastQC report?</p>
 <p><strong>Question:</strong> Which file is of better quality?</p>
 <p>Pay special attention to:</p>
@@ -429,25 +443,30 @@ Removing low-quality bases from the start and end of each read.
 Trimming using a sliding window that checks the average quality within a region.
 Discarding reads that are too short after trimming.</p>
 <p>It helps clean up the data so that poor-quality sequences don't interfere with downstream analysis.</p>
-<h3 id="step-1-download-adapter-file">Step 1: Download adapter file</h3>
+<h3 id="step-1-download-the-adapter-file">Step 1: Download the adapter file</h3>
 <pre class="hljs"><code><div>curl -O -J -L https://osf.io/v24pt/download -o adapters.fa
 </div></code></pre>
+<hr>
 <h3 id="step-2-pull-trimmomatic-docker-image">Step 2: Pull Trimmomatic Docker image</h3>
 <pre class="hljs"><code><div>docker pull quay.io/biocontainers/trimmomatic:0.39--hdfd78af_2
 </div></code></pre>
+<hr>
 <h3 id="step-3-run-trimmomatic-paired-end">Step 3: Run Trimmomatic (paired-end)</h3>
 <pre class="hljs"><code><div>docker run --rm -v <span class="hljs-string">"<span class="hljs-variable">$PWD</span>"</span>:/data quay.io/biocontainers/trimmomatic:0.39--hdfd78af_2 trimmomatic PE -phred33   /data/SRR957824_1.fastq.gz /data/SRR957824_2.fastq.gz   /data/trimmed_1.fastq /data/trimmed_1_unpaired.fastq   /data/trimmed_2.fastq /data/trimmed_2_unpaired.fastq   ILLUMINACLIP:/data/adapters.fasta:2:30:10   LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
 </div></code></pre>
-<p><strong>Question:</strong> What adapters were used and how does Trimmomatic identify them?</p>
+<hr>
+<p><strong>Question:</strong> What adapters were used, and how does Trimmomatic identify them?</p>
 <p><strong>Question:</strong> What are the unpaired FASTQ files, and why are they generated?</p>
 <hr>
 <h2 id="fastqc-post-trimming-quality-check">FastQC (Post-Trimming Quality Check)</h2>
 <h3 id="step-1-run-fastqc-again-on-filtered-reads">Step 1: Run FastQC again on filtered reads</h3>
 <pre class="hljs"><code><div>docker run --rm -v <span class="hljs-string">"<span class="hljs-variable">$PWD</span>"</span>:/data biocontainers/fastqc:v0.11.9_cv8 fastqc /data/trimmed_1.fastq /data/trimmed_2.fastq
 </div></code></pre>
+<hr>
 <h3 id="step-2-list-outputs">Step 2: List outputs</h3>
 <pre class="hljs"><code><div>ls *trimmed*_fastqc.html
 </div></code></pre>
+<hr>
 <p>Open both <code>.html</code> files in your browser and look at the reports.</p>
 <p><strong>Question:</strong> What improvements are visible after trimming?</p>
 <p><strong>Question:</strong> How did trimming affect per-base quality and read lengths?</p>
@@ -455,9 +474,9 @@ Discarding reads that are too short after trimming.</p>
 <h2 id="additional-questions-about-fastqc">Additional Questions about FastQC</h2>
 <p><strong>Question:</strong> Which FastQC modules showed the most improvement after trimming?</p>
 <p><strong>Question:</strong> Did the adapter content change after trimming? How can you tell?</p>
-<p><strong>Question:</strong> How does sequence length distribution look after trimming compared to before?</p>
+<p><strong>Question:</strong> How does the sequence length distribution look after trimming compared to before?</p>
 <p><strong>Question:</strong> Would you expect every dataset to need trimming? Why or why not?</p>
-<p><strong>Question:</strong> What are potential consequences of skipping quality control and trimming in a diagnostic laboratory?</p>
+<p><strong>Question:</strong> What are the potential consequences of skipping quality control and trimming in a diagnostic laboratory?</p>
 <hr>
 <h2 id="summary">Summary</h2>
 <ul>
