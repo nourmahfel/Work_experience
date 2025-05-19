@@ -164,7 +164,7 @@ Open both `.html` files in your browser and look at the reports.
 ---
 ## Additional Questions about FastQC
 
-**Question:** Question: Which FastQC modules showed the most improvement after trimming?
+**Question:** Which FastQC modules showed the most improvement after trimming?
 
 
 **Question:** Did the adapter content change after trimming? How can you tell?
@@ -179,7 +179,7 @@ Open both `.html` files in your browser and look at the reports.
 
 
 
-**Question:** What are potential consequences of skipping quality control and trimming in a real project?
+**Question:** What are potential consequences of skipping quality control and trimming in a diagnostic laboratory?
 
 
 
