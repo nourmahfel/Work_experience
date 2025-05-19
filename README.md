@@ -25,11 +25,19 @@ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_1.fastq.gz
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_2.fastq.gz
 ```
 
-### Step 2: Check file size and lock them
+### Step 2: Check file size
 
 ```bash
-ls -lh
+ls -l
 ```
+There are 500 000 paired-end reads taken randomly from the original data
+
+One last thing before we get to the quality control: those files are writeable. By default, UNIX makes things writeable by the file owner. This poses an issue with creating typos or errors in raw data. We fix that before going further
+
+```bash
+chmod u-w *
+```
+
 
 **Question:** Where does the filename come from?
 
@@ -49,9 +57,13 @@ zless SRR957824_1.fastq.gz
 
 ---
 
-## FastQC and Trimmomatic (Pre-Trimming Quality Check)
+## FastQC (Pre-Trimming Quality Check)
 
-Please note that this exercise uses Docker to run the required bioinformatics tools because it makes things simple and consistent. Instead of installing software like FastQC or Trimmomatic yourself, Docker lets you download small packages (called containers) that already have everything set up. You can then run them directly on your data using simple commands. Docker makes it easy to run bioinformatics tools without worrying about installation or compatibility.
+To check the quality of the sequence data we will use a tool called FastQC.
+
+FastQC has a graphical interface and can be downloaded and run on a Windows or Linux computer without installation. It is available [here](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).
+
+However, FastQC is also available as a command line utility in docker. Docker makes things simple and consistent. Instead of installing software like FastQC or Trimmomatic yourself, Docker lets you download small packages (called containers) that already have everything set up. You can then run them directly on your data using simple commands. Docker makes it easy to run bioinformatics tools without worrying about installation or compatibility.
 
 Think of Docker like a shipping container for software. Just like shipping containers hold goods and can be transported anywhere, Docker containers hold software and can run anywhere: on your laptop, a lab server, or the cloud without needing to be unpacked or reinstalled. Everything the program needs is bundled inside. 
 
@@ -69,8 +81,11 @@ docker run --rm -v "$PWD":/data biocontainers/fastqc:v0.11.9_cv8 fastqc /data/SR
 ```bash
 ls *fastqc*
 ```
+For each file, FastQC has produced both a .zip archive containing all the plots, and a html report.
+Download and open the html files with your favourite web browser.
 
-Open `SRR957824_1_fastqc.html` and `SRR957824_2_fastqc.html` in a browser.
+
+
 
 **Question:** What should you pay attention to in the FastQC report?
 
@@ -83,10 +98,22 @@ Pay special attention to:
 - Per-base sequence quality
 - Sequence length distribution
 - Adapter content
+  
+Explanations for the various quality modules can be found [here](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/). Also, have a look at examples of a good and a bad illumina read set for comparison.
+You will note that the reads in your uploaded dataset have fairly poor quality (<20) towards the end. There are also outlier reads that have very poor quality for most of the second half of the reads.
 
 ---
 
 ## Adapter Trimming with Trimmomatic
+
+Trimmomatic is a tool that removes adapter sequences and trims low-quality regions from sequencing reads. It works by:
+
+Scanning the reads for known adapter sequences using exact or partial matches.
+Removing low-quality bases from the start and end of each read.
+Trimming using a sliding window that checks the average quality within a region.
+Discarding reads that are too short after trimming.
+
+It helps clean up the data so that poor-quality sequences don't interfere with downstream analysis.
 
 ### Step 1: Download adapter file
 ```bash
@@ -115,7 +142,7 @@ docker run --rm -v "$PWD":/data quay.io/biocontainers/trimmomatic:0.39--hdfd78af
 
 ## FastQC (Post-Trimming Quality Check)
 
-### Step 1: Run FastQC again
+### Step 1: Run FastQC again on filtered reads
 ```bash
 docker run --rm -v "$PWD":/data biocontainers/fastqc:v0.11.9_cv8 fastqc /data/trimmed_1.fastq /data/trimmed_2.fastq
 ```
@@ -125,7 +152,7 @@ docker run --rm -v "$PWD":/data biocontainers/fastqc:v0.11.9_cv8 fastqc /data/tr
 ls *trimmed*_fastqc.html
 ```
 
-Open both `.html` files in your browser.
+Open both `.html` files in your browser and look at the reports.
 
 **Question:** What improvements are visible after trimming?
 
