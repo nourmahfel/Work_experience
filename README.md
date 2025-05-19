@@ -1,9 +1,25 @@
+# 📁 Folder Contents
+
+### `answers/`
+This folder contains:
+- The **completed workbook answers** to the practical questions.
+- The **FastQC output reports** (`.html` and `.zip`) generated before and after trimming.
+
+### `data/`
+This folder includes:
+- The **adapter file** (`adapters.fa`) used by Trimmomatic for adapter trimming.
+
+### `fastqc_example_res/`
+This folder provides:
+- **Example FastQC results** from previously analysed datasets.
+- Includes one example of **high-quality** and one of **low-quality** sequencing data to help users learn how to interpret FastQC reports.
+
+
 # Practical: Quality Control and Trimming
 
 In this practical, you will learn to import, view, and check the quality of raw high-throughput sequencing data using FastQC and Trimmomatic (via Docker).
 
 The first dataset is from an Illumina MiSeq sequencing of *enterohaemorrhagic E. coli* (EHEC), serotype O157 — a potentially fatal gastrointestinal pathogen involved in a 2011 outbreak in St. Louis, USA. The data is paired-end 2×150 bp reads.
-
 ---
 
 ## Working Directory
