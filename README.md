@@ -135,6 +135,7 @@ Open both `.html` files in your browser.
 
 
 ---
+## Additional Questions about FastQC
 
 **Question:** Question: Which FastQC modules showed the most improvement after trimming?
 
