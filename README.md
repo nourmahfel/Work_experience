@@ -37,23 +37,32 @@ One last thing before we get to the quality control: those files are writeable. 
 ```bash
 chmod u-w *
 ```
-You can read more on the FASTQ format [here](https://www.hadriengourle.com/tutorials/file_formats/).
-
-**Question:** Where does the filename come from?
-
-
-
-**Question:** Why are there `_1` and `_2` in the file names?
-
-
 ---
 
 ### Step 3: Preview a FASTQ file
+
+The fastq format is a text-based format that represents nucleotide sequences but also contains the corresponding quality of each nucleotide. It is the standard for storing the output of high-throughput sequencing instruments such as the Illumina machines.
+
+A fastq file uses four lines per sequence:
+
+Line 1 begins with a '@' character and is followed by a sequence identifier and an optional description (like a FASTA title line).
+Line 2 is the raw sequence letters.
+Line 3 begins with a '+' character and is optionally followed by the same sequence identifier (and any description) again.
+Line 4 encodes the quality values for the sequence in Line 2, and must contain the same number of symbols as letters in the sequence.
+
 ```bash
 zless SRR957824_1.fastq.gz
 ```
 
 **Tip:** Use the spacebar to scroll and `q` to exit.
+
+---
+
+You can read more on the FASTQ format [here](https://www.hadriengourle.com/tutorials/file_formats/).
+
+**Question:** Where does the filename come from?
+
+**Question:** Why are there `_1` and `_2` in the file names?
 
 ---
 
