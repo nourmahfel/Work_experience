@@ -16,11 +16,11 @@ cd ~/work
 ```
 ## Downloading the Data
 
-🧪 In this practical, you will use the European Nucleotide Archive (ENA) to download real Illumina sequencing data for quality control and trimming exercises. ENA is a public database that stores nucleotide sequencing data, such as DNA and RNA sequences, submitted by researchers around the world.
+🧪 In this practical, you will use the [European Nucleotide Archive](https://www.ebi.ac.uk/ena/browser/home) (ENA) to download real Illumina sequencing data for quality control and trimming exercises. ENA is a public database that stores nucleotide sequencing data, such as DNA and RNA sequences, submitted by researchers around the world.
 
 It is part of the EMBL-EBI (European Bioinformatics Institute). ENA provides free access to raw sequencing reads, genome assemblies, and functional annotation. Accession numbers like SRR957824 are unique IDs that help you find specific datasets.
 
-The raw data is available on [ENA](https://www.ebi.ac.uk/ena/browser/home) under accession number SRR957824. 
+The raw data is available on ENA under accession number SRR957824. 
 
 ### Step 1: Download data
 
@@ -45,6 +45,12 @@ chmod u-w *
 
 ### Step 3: Preview a FASTQ file
 
+```bash
+zless SRR957824_1.fastq.gz
+```
+
+**Tip:** Use the spacebar to scroll and `q` to exit.
+
 The fastq format is a text-based format that represents nucleotide sequences but also contains the corresponding quality of each nucleotide. It is the standard for storing the output of high-throughput sequencing instruments such as the Illumina machines.
 
 A fastq file uses four lines per sequence:
@@ -53,12 +59,6 @@ Line 1 begins with a '@' character and is followed by a sequence identifier and 
 Line 2 is the raw sequence of letters.
 Line 3 begins with a '+' character and is optionally followed by the same sequence identifier (and any description) again.
 Line 4 encodes the quality values for the sequence in Line 2, and must contain the same number of symbols as letters in the sequence.
-
-```bash
-zless SRR957824_1.fastq.gz
-```
-
-**Tip:** Use the spacebar to scroll and `q` to exit.
 
 ---
 
