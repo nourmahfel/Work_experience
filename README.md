@@ -56,8 +56,11 @@ The fastq format is a text-based format that represents nucleotide sequences but
 A fastq file uses four lines per sequence:
 
 Line 1 begins with a '@' character and is followed by a sequence identifier and an optional description (like a FASTA title line).
+
 Line 2 is the raw sequence of letters.
+
 Line 3 begins with a '+' character and is optionally followed by the same sequence identifier (and any description) again.
+
 Line 4 encodes the quality values for the sequence in Line 2, and must contain the same number of symbols as letters in the sequence.
 
 ---
