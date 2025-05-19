@@ -3,16 +3,18 @@
 ### `answers/`
 This folder contains:
 - The **completed workbook answers** to the practical questions.
-- The **FastQC output reports** (`.html` and `.zip`) generated before and after trimming.
+- The **FastQC output reports** (`.html`) generated before and after trimming.
 
 ### `data/`
 This folder includes:
-- The **adapter file** (`adapters.fa`) used by Trimmomatic for adapter trimming.
+- The **adapter file** (`adapters.fasta`) used by Trimmomatic for adapter trimming.
 
 ### `fastqc_example_res/`
+
 This folder provides:
-- **Example FastQC results** from previously analysed datasets.
-- Includes one example of **high-quality** and one of **low-quality** sequencing data to help users learn how to interpret FastQC reports.
+
+- Example FastQC results from previously analysed datasets.
+- Includes one example of high-quality and one of low-quality sequencing data to help users learn how to interpret FastQC reports.
 
 ---
 
