@@ -33,15 +33,10 @@ ls -lh
 
 **Question:** Where does the filename come from?
 
-_________________________________________________________________________________________________
 
-_________________________________________________________________________________________________
 
 **Question:** Why are there `_1` and `_2` in the file names?
 
-_________________________________________________________________________________________________
-
-_________________________________________________________________________________________________
 
 ---
 
@@ -79,15 +74,10 @@ Open `SRR957824_1_fastqc.html` and `SRR957824_2_fastqc.html` in a browser.
 
 **Question:** What should you pay attention to in the FastQC report?
 
-_________________________________________________________________________________________________
 
-_________________________________________________________________________________________________
 
 **Question:** Which file is of better quality?
 
-_________________________________________________________________________________________________
-
-_________________________________________________________________________________________________
 
 Pay special attention to:
 - Per-base sequence quality
@@ -110,20 +100,16 @@ docker pull quay.io/biocontainers/trimmomatic:0.39--hdfd78af_2
 
 ### Step 3: Run Trimmomatic (paired-end)
 ```bash
-docker run --rm -v "$PWD":/data quay.io/biocontainers/trimmomatic:0.39--hdfd78af_2 trimmomatic PE -phred33   /data/SRR957824_1.fastq.gz /data/SRR957824_2.fastq.gz   /data/trimmed_1.fastq /data/trimmed_1_unpaired.fastq   /data/trimmed_2.fastq /data/trimmed_2_unpaired.fastq   ILLUMINACLIP:/data/adapters.fa:2:30:10   LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+docker run --rm -v "$PWD":/data quay.io/biocontainers/trimmomatic:0.39--hdfd78af_2 trimmomatic PE -phred33   /data/SRR957824_1.fastq.gz /data/SRR957824_2.fastq.gz   /data/trimmed_1.fastq /data/trimmed_1_unpaired.fastq   /data/trimmed_2.fastq /data/trimmed_2_unpaired.fastq   ILLUMINACLIP:/data/adapters.fasta:2:30:10   LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
 ```
 
 **Question:** What adapters were used and how does Trimmomatic identify them?
 
-_________________________________________________________________________________________________
 
-_________________________________________________________________________________________________
 
 **Question:** What are the unpaired FASTQ files, and why are they generated?
 
-_________________________________________________________________________________________________
 
-_________________________________________________________________________________________________
 
 ---
 
@@ -143,46 +129,31 @@ Open both `.html` files in your browser.
 
 **Question:** What improvements are visible after trimming?
 
-_________________________________________________________________________________________________
 
-_________________________________________________________________________________________________
 
 **Question:** How did trimming affect per-base quality and read lengths?
 
-_________________________________________________________________________________________________
-
-_________________________________________________________________________________________________
 
 ---
 
 **Question:** Question: Which FastQC modules showed the most improvement after trimming?
-_________________________________________________________________________________________________
 
-_________________________________________________________________________________________________
 
 **Question:** Did the adapter content change after trimming? How can you tell?
 
-_________________________________________________________________________________________________
 
-_________________________________________________________________________________________________
 
 **Question:** How does sequence length distribution look after trimming compared to before?
 
-_________________________________________________________________________________________________
 
-_________________________________________________________________________________________________
 
 **Question:** Would you expect every dataset to need trimming? Why or why not?
 
-_________________________________________________________________________________________________
 
-_________________________________________________________________________________________________
 
 **Question:** What are potential consequences of skipping quality control and trimming in a real project?
 
-_________________________________________________________________________________________________
 
-_________________________________________________________________________________________________
 
 ---
 
