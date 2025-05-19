@@ -16,7 +16,7 @@ cd ~/work
 ```
 ## Downloading the Data
 
-🧪 In this practical, you will use ENA to download real Illumina sequencing data for quality control and trimming exercises. The European Nucleotide Archive (ENA) is a public database that stores nucleotide sequencing data, such as DNA and RNA sequences, submitted by researchers around the world.
+🧪 In this practical, you will use the European Nucleotide Archive (ENA) to download real Illumina sequencing data for quality control and trimming exercises. ENA is a public database that stores nucleotide sequencing data, such as DNA and RNA sequences, submitted by researchers around the world.
 
 It is part of the EMBL-EBI (European Bioinformatics Institute). ENA provides free access to raw sequencing reads, genome assemblies, and functional annotation. Accession numbers like SRR957824 are unique IDs that help you find specific datasets.
 
