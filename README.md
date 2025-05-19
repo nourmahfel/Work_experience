@@ -1,4 +1,4 @@
-# Practical: Quality Control and Trimming (with Docker and Trimmomatic)
+# Practical: Quality Control and Trimming
 
 In this practical you will learn to import, view, and check the quality of raw high-throughput sequencing data using FastQC and Trimmomatic (via Docker).
 
