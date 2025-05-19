@@ -37,7 +37,7 @@ One last thing before we get to the quality control: those files are writeable. 
 ```bash
 chmod u-w *
 ```
-
+You can read more on the FASTQ format [here](https://www.hadriengourle.com/tutorials/file_formats/).
 
 **Question:** Where does the filename come from?
 
