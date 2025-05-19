@@ -28,6 +28,7 @@ The raw data is available on ENA under accession number SRR957824.
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_1.fastq.gz
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_2.fastq.gz
 ```
+---
 
 ### Step 2: Check file size
 
@@ -50,6 +51,7 @@ zless SRR957824_1.fastq.gz
 ```
 
 **Tip:** Use the spacebar to scroll and `q` to exit.
+---
 
 The fastq format is a text-based format that represents nucleotide sequences but also contains the corresponding quality of each nucleotide. It is the standard for storing the output of high-throughput sequencing instruments such as the Illumina machines.
 
@@ -63,9 +65,9 @@ Line 3 begins with a '+' character and is optionally followed by the same sequen
 
 Line 4 encodes the quality values for the sequence in Line 2, and must contain the same number of symbols as letters in the sequence.
 
----
-
 You can read more on the FASTQ format [here](https://www.hadriengourle.com/tutorials/file_formats/).
+
+---
 
 **Question:** Where does the filename come from?
 
@@ -87,12 +89,12 @@ Think of Docker like a shipping container for software. Just like shipping conta
 ```bash
 docker pull biocontainers/fastqc:v0.11.9_cv8
 ```
-
+---
 ### Step 2: Run FastQC in Docker
 ```bash
 docker run --rm -v "$PWD":/data biocontainers/fastqc:v0.11.9_cv8 fastqc /data/SRR957824_1.fastq.gz /data/SRR957824_2.fastq.gz
 ```
-
+---
 ### Step 3: List output files
 ```bash
 ls *fastqc*
@@ -100,12 +102,10 @@ ls *fastqc*
 For each file, FastQC has produced both a .zip archive containing all the plots and a HTML report.
 Download and open the HTML files with your favourite web browser.
 
-
+---
 
 
 **Question:** What should you pay attention to in the FastQC report?
-
-
 
 **Question:** Which file is of better quality?
 
@@ -135,24 +135,21 @@ It helps clean up the data so that poor-quality sequences don't interfere with d
 ```bash
 curl -O -J -L https://osf.io/v24pt/download -o adapters.fa
 ```
-
+---
 ### Step 2: Pull Trimmomatic Docker image
 ```bash
 docker pull quay.io/biocontainers/trimmomatic:0.39--hdfd78af_2
 ```
-
+---
 ### Step 3: Run Trimmomatic (paired-end)
 ```bash
 docker run --rm -v "$PWD":/data quay.io/biocontainers/trimmomatic:0.39--hdfd78af_2 trimmomatic PE -phred33   /data/SRR957824_1.fastq.gz /data/SRR957824_2.fastq.gz   /data/trimmed_1.fastq /data/trimmed_1_unpaired.fastq   /data/trimmed_2.fastq /data/trimmed_2_unpaired.fastq   ILLUMINACLIP:/data/adapters.fasta:2:30:10   LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
 ```
+---
 
 **Question:** What adapters were used, and how does Trimmomatic identify them?
 
-
-
 **Question:** What are the unpaired FASTQ files, and why are they generated?
-
-
 
 ---
 
@@ -162,20 +159,18 @@ docker run --rm -v "$PWD":/data quay.io/biocontainers/trimmomatic:0.39--hdfd78af
 ```bash
 docker run --rm -v "$PWD":/data biocontainers/fastqc:v0.11.9_cv8 fastqc /data/trimmed_1.fastq /data/trimmed_2.fastq
 ```
-
+---
 ### Step 2: List outputs
 ```bash
 ls *trimmed*_fastqc.html
 ```
+---
 
 Open both `.html` files in your browser and look at the reports.
 
 **Question:** What improvements are visible after trimming?
 
-
-
 **Question:** How did trimming affect per-base quality and read lengths?
-
 
 ---
 ## Additional Questions about FastQC
