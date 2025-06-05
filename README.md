@@ -23,18 +23,35 @@ It is part of the EMBL-EBI (European Bioinformatics Institute). ENA provides fre
 The raw data is available on ENA under accession number SRR957824. 
 
 ### Step 1: Download data
+We will now download real sequencing data from the European Nucleotide Archive (ENA), a freely accessible public repository. This archive stores raw reads, genomes, and other sequence data submitted by researchers globally. Wget is used to fetch the data.
+
+Each dataset has a unique accession number. In this case, we are using accession number SRR957824.
 
 ```bash
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_1.fastq.gz
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_2.fastq.gz
+
 ```
 ---
 
 ### Step 2: Check file size
+Make sure both FASTQ files downloaded correctly and are present.
+
 
 ```bash
 ls -l
 ```
+Command explanation:
+
+ls — list. This shows the files in the current folder.
+
+-l — long format, showing file size, date, and permissions.
+
+-h — human-readable. This displays file sizes in KB/MB instead of raw bytes.
+
+You should see two .fastq.gz files — one for each read direction.
+
+
 There are 500 000 paired-end reads taken randomly from the original data
 
 One last thing before we get to the quality control: those files are writeable. By default, UNIX makes things writeable by the file owner. This poses an issue with creating typos or errors in raw data. We fix that before going further
@@ -42,6 +59,13 @@ One last thing before we get to the quality control: those files are writeable. 
 ```bash
 chmod u-w *
 ```
+Command explanation:
+
+chmod — change mode. This edits file permissions.
+
+u-w — removes write permission from the user (you).
+
+* — means “apply this to all files in the folder.”
 ---
 
 ### Step 3: Preview a FASTQ file
@@ -49,6 +73,7 @@ chmod u-w *
 ```bash
 zless SRR957824_1.fastq.gz
 ```
+zless — lets you view compressed .gz text files without unzipping.
 
 **Tip:** Use the spacebar to scroll and `q` to exit.
 ---
@@ -94,6 +119,8 @@ docker pull biocontainers/fastqc:v0.11.9_cv8
 ```bash
 docker run --rm -v "$PWD":/data biocontainers/fastqc:v0.11.9_cv8 fastqc /data/SRR957824_1.fastq.gz /data/SRR957824_2.fastq.gz
 ```
+This runs FastQC using Docker. It will generate .html and .zip results in your current directory.
+
 ---
 ### Step 3: List output files
 ```bash
@@ -109,6 +136,10 @@ Download and open the HTML files with your favourite web browser.
 
 **Question:** Which file is of better quality?
 
+**Question:** What improvements are visible?
+
+**Question:** What are the potential consequences of skipping quality control and trimming in a diagnostic laboratory?
+
 
 Pay special attention to:
 - Per-base sequence quality
@@ -120,31 +151,11 @@ You will note that the reads in your uploaded dataset have fairly poor quality (
 
 ---
 
-## Adapter Trimming with Trimmomatic
-
-Trimmomatic is a tool that removes adapter sequences and trims low-quality regions from sequencing reads. It works by:
-
-Scanning the reads for known adapter sequences using exact or partial matches.
-Removing low-quality bases from the start and end of each read.
-Trimming using a sliding window that checks the average quality within a region.
-Discarding reads that are too short after trimming.
-
-It helps clean up the data so that poor-quality sequences don't interfere with downstream analysis. I have previously run the data with Trimmomatic and the fastqc results can be found in the results folder. Compare this fastqc with the fastqc output you produced and answer the questions below. 
-
----
-
-**Question:** What improvements are visible after trimming?
-
-**Question:** How did trimming affect per-base quality and read lengths?
-
-**Question:** What are the potential consequences of skipping quality control and trimming in a diagnostic laboratory?
-
----
 
 ## Summary
 - You downloaded and inspected paired-end Illumina reads.
 - Used Docker-based FastQC to assess raw data.
-- Compared your output with the fastqc produced from trimmed data.
+- Compared your output results.
 
 This workflow ensures data quality and prepares reads for reliable downstream analysis.
 
@@ -157,7 +168,7 @@ This folder contains:
 
 ### `data/`
 This folder includes:
-- The **adapter file** (`adapters.fasta`) used by Trimmomatic for adapter trimming.
+- The **trimmed file** (`adapters.fasta`) used by Trimmomatic for adapter trimming.
 
 ### `fastqc_example_res/`
 
