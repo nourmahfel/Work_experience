@@ -160,11 +160,14 @@ This workflow ensures data quality and prepares reads for reliable downstream an
 ### `answers/`
 This folder contains:
 - The **completed workbook answers** to the practical questions.
+
+### `results/`
 - The **FastQC output reports** (`.html`) generated before and after trimming.
 
 ### `data/`
 This folder includes:
-- The **trimmed file** (`adapters.fasta`) used by Trimmomatic for adapter trimming.
+- The **fastq file** used to run the exercise
+- The **trimmed fastq file** used to run the exercise.
 
 ### `fastqc_example_res/`
 
