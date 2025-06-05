@@ -164,7 +164,7 @@ This folder contains:
 ### `results/`
 - The **FastQC output reports** (`.html`) generated before and after trimming.
 
-### `data/`
+### `data/SRA/`
 This folder includes:
 - The **fastq file** used to run the exercise
 - The **trimmed fastq file** used to run the exercise.
