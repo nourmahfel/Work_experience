@@ -130,6 +130,7 @@ Trimming using a sliding window that checks the average quality within a region.
 Discarding reads that are too short after trimming.
 
 It helps clean up the data so that poor-quality sequences don't interfere with downstream analysis. I have previously run the data with Trimmomatic and the fastqc results can be found in the results folder. Compare this fastqc with the fastqc output you produced and answer the questions below. 
+
 ---
 
 **Question:** What improvements are visible after trimming?
