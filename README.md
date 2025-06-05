@@ -28,15 +28,14 @@ We will now download real sequencing data from the European Nucleotide Archive (
 Each dataset has a unique accession number. In this case, we are using accession number SRR957824.
 
 ```bash
-wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_1.fastq.gz
-wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR957/SRR957824/SRR957824_2.fastq.gz
+wget https://raw.githubusercontent.com/nourmahfel/work_experience/master/data/SRA/SRR957824.fastq
+wget https://raw.githubusercontent.com/nourmahfel/work_experience/master/data/SRA/SRR957824_trimmed.fastq
 
 ```
 ---
 
 ### Step 2: Check file size
-Make sure both FASTQ files downloaded correctly and are present.
-
+Make sure both FASTQ files downloaded correctly and are present by running the command below.
 
 ```bash
 ls -l
@@ -49,10 +48,10 @@ ls — list. This shows the files in the current folder.
 
 -h — human-readable. This displays file sizes in KB/MB instead of raw bytes.
 
-You should see two .fastq.gz files — one for each read direction.
+You should see two .fastq files.
 
 
-There are 500 000 paired-end reads taken randomly from the original data
+There are ~ 80 000 paired-end reads taken randomly from the original data
 
 One last thing before we get to the quality control: those files are writeable. By default, UNIX makes things writeable by the file owner. This poses an issue with creating typos or errors in raw data. We fix that before going further
 
@@ -65,7 +64,8 @@ chmod — change mode. This edits file permissions.
 
 u-w — removes write permission from the user (you).
 
-* — means “apply this to all files in the folder.”
+star — means “apply this to all files in the folder.”
+
 ---
 
 ### Step 3: Preview a FASTQ file
@@ -73,6 +73,7 @@ u-w — removes write permission from the user (you).
 ```bash
 zless SRR957824_1.fastq.gz
 ```
+
 zless — lets you view compressed .gz text files without unzipping.
 
 **Tip:** Use the spacebar to scroll and `q` to exit.
@@ -122,7 +123,7 @@ This runs FastQC using Docker. It will generate .html and .zip results in your c
 ls *fastqc*
 ```
 For each file, FastQC has produced both a .zip archive containing all the plots and a HTML report.
-Download and open the HTML files with your favourite web browser.
+Open the HTML files with your favourite web browser.
 
 ---
 
