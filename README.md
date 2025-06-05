@@ -138,7 +138,7 @@ Download and open the HTML files with your favourite web browser.
 
 **Question:** What improvements are visible?
 
-**Question:** What are the potential consequences of skipping quality control and trimming in a diagnostic laboratory?
+**Question:** What are the potential consequences of skipping quality control in a diagnostic laboratory?
 
 
 Pay special attention to:
