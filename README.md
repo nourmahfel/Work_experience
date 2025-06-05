@@ -129,78 +129,21 @@ Removing low-quality bases from the start and end of each read.
 Trimming using a sliding window that checks the average quality within a region.
 Discarding reads that are too short after trimming.
 
-It helps clean up the data so that poor-quality sequences don't interfere with downstream analysis.
-
-### Step 1: Download the adapter file
-```bash
-curl -O -J -L https://osf.io/v24pt/download -o adapters.fa
-```
+It helps clean up the data so that poor-quality sequences don't interfere with downstream analysis. I have previously run the data with Trimmomatic and the fastqc results can be found in the results folder. Compare this fastqc with the fastqc output you produced and answer the questions below. 
 ---
-### Step 2: Pull Trimmomatic Docker image
-```bash
-docker pull quay.io/biocontainers/trimmomatic:0.39--hdfd78af_2
-```
----
-### Step 3: Run Trimmomatic (paired-end)
-```bash
-docker run --rm -v "$PWD":/data quay.io/biocontainers/trimmomatic:0.39--hdfd78af_2 trimmomatic PE -phred33   /data/SRR957824_1.fastq.gz /data/SRR957824_2.fastq.gz   /data/trimmed_1.fastq /data/trimmed_1_unpaired.fastq   /data/trimmed_2.fastq /data/trimmed_2_unpaired.fastq   ILLUMINACLIP:/data/adapters.fasta:2:30:10   LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
-```
----
-
-**Question:** What adapters were used, and how does Trimmomatic identify them?
-
-**Question:** What are the unpaired FASTQ files, and why are they generated?
-
----
-
-## FastQC (Post-Trimming Quality Check)
-
-### Step 1: Run FastQC again on filtered reads
-```bash
-docker run --rm -v "$PWD":/data biocontainers/fastqc:v0.11.9_cv8 fastqc /data/trimmed_1.fastq /data/trimmed_2.fastq
-```
----
-### Step 2: List outputs
-```bash
-ls *trimmed*_fastqc.html
-```
----
-
-Open both `.html` files in your browser and look at the reports.
 
 **Question:** What improvements are visible after trimming?
 
 **Question:** How did trimming affect per-base quality and read lengths?
 
----
-## Additional Questions about FastQC
-
-**Question:** Which FastQC modules showed the most improvement after trimming?
-
-
-**Question:** Did the adapter content change after trimming? How can you tell?
-
-
-
-**Question:** How does the sequence length distribution look after trimming compared to before?
-
-
-
-**Question:** Would you expect every dataset to need trimming? Why or why not?
-
-
-
 **Question:** What are the potential consequences of skipping quality control and trimming in a diagnostic laboratory?
-
-
 
 ---
 
 ## Summary
 - You downloaded and inspected paired-end Illumina reads.
 - Used Docker-based FastQC to assess raw data.
-- Trimmed adapters and low-quality regions using Trimmomatic.
-- Verified improvements using FastQC.
+- Compared your output with the fastqc produced from trimmed data.
 
 This workflow ensures data quality and prepares reads for reliable downstream analysis.
 
