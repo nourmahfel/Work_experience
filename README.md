@@ -76,6 +76,7 @@ zless SRR957824_1.fastq.gz
 zless — lets you view compressed .gz text files without unzipping.
 
 **Tip:** Use the spacebar to scroll and `q` to exit.
+
 ---
 
 The fastq format is a text-based format that represents nucleotide sequences but also contains the corresponding quality of each nucleotide. It is the standard for storing the output of high-throughput sequencing instruments such as the Illumina machines.
@@ -91,12 +92,6 @@ Line 3 begins with a '+' character and is optionally followed by the same sequen
 Line 4 encodes the quality values for the sequence in Line 2, and must contain the same number of symbols as letters in the sequence.
 
 You can read more on the FASTQ format [here](https://www.hadriengourle.com/tutorials/file_formats/).
-
----
-
-**Question:** Where does the filename come from?
-
-**Question:** Why are there `_1` and `_2` in the file names?
 
 ---
 
