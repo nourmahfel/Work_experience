@@ -113,7 +113,7 @@ docker pull biocontainers/fastqc:v0.11.9_cv8
 ---
 ### Step 2: Run FastQC in Docker
 ```bash
-docker run --rm -v "$PWD":/data biocontainers/fastqc:v0.11.9_cv8 fastqc /data/SRR957824_1.fastq.gz /data/SRR957824_2.fastq.gz
+docker run --rm -v "$PWD":/data biocontainers/fastqc:v0.11.9_cv8 fastqc /data/SRR957824.fastq /data/SRR957824_trimmed.fastq
 ```
 This runs FastQC using Docker. It will generate .html and .zip results in your current directory.
 
